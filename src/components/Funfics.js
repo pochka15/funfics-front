@@ -18,12 +18,12 @@ export default function Funfics() {
   const history = useHistory();
 
   React.useEffect(() => {
-    setTimeout(async () => {
+    (async () => {
       const got = await funficsResponseText()
       if (got) {
         setFunfics(got)
       }
-    }, 1000)
+    })()
   }, [])
 
   const readFunfic = id => history.push(`/read/${id}`)
@@ -32,7 +32,6 @@ export default function Funfics() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo"/>
-        <p>{FUNFICS_URL.toString()}</p>
         {funfics.length
           ? funfics.map((f, ind) => <p onClick={() => readFunfic(f.id)} key={f.id}>{`${f.id}: ${f.name}`}</p>)
           : "No funfics yet"
