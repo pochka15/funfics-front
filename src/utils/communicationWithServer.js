@@ -1,32 +1,27 @@
 import axios from "axios";
 import Globals from "../globals";
 
-//TODO(@pochka15): impelment erorrs handling
-
-function send(funfic) {
-  console.log("Sending:", funfic)
+function send(funfic, responseDataHandler, errorHandler) {
   axios.post(Globals.FUNFICS_URL.toString(), funfic)
-    .then(response => {
-      console.log("Response:", response.data);
-    })
-    .catch(error => {
-      console.log("Something went wrong", error);
-      if (error.response) {
-        console.log(error.response.data);
-      }
-    });
+    .then(response => responseDataHandler(response.data))
+    .catch(error => errorHandler(error));
 }
 
-function fetchFunficById(funficId) {
-  // TODO(@pochka15): make it better
-  return axios.get(Globals.SINGLE_FUNFIC_URL.toString(), {
+function fetchFunficById(funficId, responseDataHandler, errorHandler) {
+  axios.get(Globals.SINGLE_FUNFIC_URL.toString(), {
     params: {
       id: funficId
     }
-  }).then(response => {
-    console.log("Response:", response.data);
-    return response.data;
-  }).catch(error => console.log("Something went wrong", error))
+  }).then(response => responseDataHandler(response.data))
+    .catch(error => errorHandler(error))
 }
 
-export {send, fetchFunficById};
+function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
+  axios.get(Globals.FUNFICS_URL.toString())
+    .then(response => {
+      jsonDataHandler(response.data)
+    })
+    .catch(erorr => errorHandler(erorr))
+}
+
+export {send, fetchFunficById, fetchFunficsWithoutContent};

@@ -1,29 +1,21 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
 import {Spinner} from "react-bootstrap";
+import {fetchFunficsWithoutContent} from "../utils/communicationWithServer";
+import ErrorAlert from "./bootstrapWrappers/ErrorAlert";
 
-const FUNFICS_URL = new URL('/funfics', process.env.REACT_APP_API_URL);
-
-async function funficsResponseJson() {
-  const response = await fetch(FUNFICS_URL.toString())
-  if (response.ok) {
-    return await response.json()
-  } else {
-    return null
-  }
-}
 
 export default function Funfics() {
-  const [funfics, setFunfics] = React.useState([])
-  const [loadingFunfics, setLoadingFunfics] = React.useState(true)
+  const [funfics, setFunfics] = React.useState([]);
+  const [loadingFunfics, setLoadingFunfics] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState(undefined);
   const history = useHistory();
 
   React.useEffect(() => {
-    funficsResponseJson()
-      .then(value => {
-        setFunfics(value)
-        setLoadingFunfics(false)
-      })
+    fetchFunficsWithoutContent(jsonData => {
+      setFunfics(jsonData)
+      setLoadingFunfics(false)
+    }, error => setErrorMessage("Couldn't fetch messages, error: " + error))
   }, [])
 
   const readFunfic = id => history.push(`/read/${id}`)
@@ -40,10 +32,14 @@ export default function Funfics() {
       : "There are no funfics in the database"
   )
 
+  const loadedFunfics = loadingFunfics ? spinner : mappedFunfics;
+
   return (
     <div className="App">
       <header className="App-header">
-        {loadingFunfics ? spinner : mappedFunfics}
+        {errorMessage
+          ? <ErrorAlert errorMessage={errorMessage}/>
+          : loadedFunfics}
       </header>
     </div>
   )
