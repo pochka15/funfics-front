@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import Funfics from "./components/Funfics";
-import BootstrapSandbox from "./components/BootstrapSandbox";
 import FunficForm from "./components/FunficForm";
 import FunficRenderer from "./components/FunficRenderer";
 import BaseNavBar from "./components/BaseNavBar";
@@ -18,7 +17,6 @@ function App() {
         <Route path={"/read/:id"}>
           <FunficRenderer/>
         </Route>
-        <Route path={"/sandbox"} component={BootstrapSandbox}/>
         <Route path={"/"} component={Funfics}/>
       </Switch>
     </Router>
