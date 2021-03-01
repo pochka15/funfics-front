@@ -1,12 +1,12 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Col, Container, Row} from "react-bootstrap";
 
 export default function BootstrapSandbox() {
   const [counter, setCounter] = React.useState(0);
-  const incrementRef = undefined;
+  const incrementRef = useRef();
   const incrementCounter = () => setCounter(counter + 1);
-  const focusButtons = () => incrementRef.focus();
+  const focusIncrementButton = () => incrementRef.current.focus();
 
   return (
     <Container>
@@ -20,7 +20,7 @@ export default function BootstrapSandbox() {
           </Button>
         </Col>
         <Col>
-          <Button className="primary" onClick={focusButtons}>
+          <Button className="primary" onClick={focusIncrementButton}>
             Focus
           </Button>
         </Col>

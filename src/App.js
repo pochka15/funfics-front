@@ -5,10 +5,12 @@ import Funfics from "./components/Funfics";
 import BootstrapSandbox from "./components/BootstrapSandbox";
 import FunficForm from "./components/FunficForm";
 import FunficRenderer from "./components/FunficRenderer";
+import BaseNavBar from "./components/BaseNavBar";
 
 function App() {
   return (
     <Router>
+      <BaseNavBar/>
       <Switch>
         <Route path={"/editor"}>
           <FunficForm/>
