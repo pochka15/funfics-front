@@ -1,16 +1,15 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
 import {Spinner} from "react-bootstrap";
-import {fetchFunficsWithoutContent} from "../utils/communicationWithServer";
-import ErrorAlert from "./bootstrapWrappers/ErrorAlert";
+import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
+import {fetchFunficsWithoutContent} from "../../utils/funficsApi";
 
 
-export default function Funfics() {
+export default function FunficsList() {
   const [funfics, setFunfics] = React.useState([]);
   const [loadingFunfics, setLoadingFunfics] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState(undefined);
   const history = useHistory();
-
   React.useEffect(() => {
     fetchFunficsWithoutContent(jsonData => {
       setFunfics(jsonData)
