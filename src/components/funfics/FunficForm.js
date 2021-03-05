@@ -1,34 +1,52 @@
-import React, {useRef, useState} from 'react'
+import React, {useMemo, useRef, useState} from 'react'
 import {Button, Container, Form} from "react-bootstrap";
-import MarkdownEditor from "./MarkdownEditor";
+import MarkdownEditor from "../markdown/MarkdownEditor";
 import {useForm} from "react-hook-form";
-import {send} from "../utils/communicationWithServer"
-import SuccessAlert from "./bootstrapWrappers/SuccessAlert";
-import ErrorAlert from "./bootstrapWrappers/ErrorAlert";
+import SuccessAlert from "../bootstrapWrappers/SuccessAlert";
+import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
+import {save} from "../../utils/funficsApi";
+import {AuthContext} from "../../contexts/AuthContext";
 
 export default function FunficForm() {
-  const {register, handleSubmit} = useForm();
   const [successMessage, setSuccessMessage] = useState();
   const [errorMessage, setErrorMessage] = useState();
-  const refreshMessages = () => {
+  const {register, handleSubmit} = useForm();
+  const content = useRef("**Hello world!**");
+  const auth = React.useContext(AuthContext)
+  const unauthenticatedMessage = useMemo(
+    () => auth.isAuthenticated ? undefined : "Please, sign in",
+    [auth.isAuthenticated])
+
+  function refreshMessages() {
     setSuccessMessage(null);
     setErrorMessage(null);
   }
-  const content = useRef("**Hello world!**");
-  const onSubmit = funficData => {
-    funficData = {
+
+  function onSubmit(funficData) {
+    if (auth.isAuthenticated) {
+      save(prepareForSaving(funficData),
+        auth.token,
+        () => setSuccessMessage("Funfic '" + funficData.name + "' is stored successfully"),
+        () => setErrorMessage("Something went wrong :("));
+    } else {
+      setErrorMessage('Unauthenticated');
+    }
+  }
+
+  function prepareForSaving(funficData) {
+    return {
       ...funficData,
       tags: funficData.tags.split(" "),
       content: content.current
     }
-    send(funficData,
-      () => setSuccessMessage("Funfic '" + funficData.name + "' is stored successfully"),
-      () => setErrorMessage("Something went wrong :("));
   }
 
   return (
     <Container>
       <Form onChange={refreshMessages} onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group>
+          {unauthenticatedMessage && <ErrorAlert errorMessage={unauthenticatedMessage}/>}
+        </Form.Group>
         <Form.Group controlId="genre">
           <Form.Label>Genre</Form.Label>
           <Form.Control name="genre" ref={register} as="input">

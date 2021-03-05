@@ -15,6 +15,7 @@ const converter = new Showdown.Converter({
 export default function MarkdownEditor({onContentUpdated}) {
   const [content, setContent] = React.useState("**Hello world!**");
   const [selectedTab, setSelectedTab] = React.useState("write");
+
   return (
     <ReactMde
       value={content}

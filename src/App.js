@@ -1,25 +1,40 @@
 import React from 'react'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
-import Funfics from "./components/Funfics";
-import FunficForm from "./components/FunficForm";
-import FunficRenderer from "./components/FunficRenderer";
+import FunficsList from "./components/funfics/FunficsList";
+import FunficForm from "./components/funfics/FunficForm";
+import FunficRenderer from "./components/funfics/FunficRenderer";
 import BaseNavBar from "./components/BaseNavBar";
+import {AuthContext} from "./contexts/AuthContext";
+import {useAuth} from "./hooks/auth.hook";
+import Login from "./components/userActivity/Login";
+import Register from "./components/userActivity/Register";
 
 function App() {
+  const {login, logout, token} = useAuth();
   return (
-    <Router>
-      <BaseNavBar/>
-      <Switch>
-        <Route path={"/editor"}>
-          <FunficForm/>
-        </Route>
-        <Route path={"/read/:id"}>
-          <FunficRenderer/>
-        </Route>
-        <Route path={"/"} component={Funfics}/>
-      </Switch>
-    </Router>
+    <AuthContext.Provider value={{
+      login, logout, token, isAuthenticated: !!token
+    }}>
+      <Router>
+        <BaseNavBar/>
+        <Switch>
+          <Route path={"/editor"}>
+            <FunficForm/>
+          </Route>
+          <Route path={"/login"}>
+            <Login/>
+          </Route>
+          <Route path={"/register"}>
+            <Register/>
+          </Route>
+          <Route path={"/read/:id"}>
+            <FunficRenderer/>
+          </Route>
+          <Route path={"/"} component={FunficsList}/>
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
