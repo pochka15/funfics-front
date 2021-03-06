@@ -1,6 +1,6 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
-import {Spinner} from "react-bootstrap";
+import {Spinner, Table} from "react-bootstrap";
 import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
 import {fetchFunficsWithoutContent} from "../../utils/funficsApi";
 
@@ -25,13 +25,42 @@ export default function FunficsList() {
     </Spinner>
   )
 
-  const mappedFunfics = (
-    funfics.length
-      ? funfics.map(f => <p onClick={() => readFunfic(f.id)} key={f.id}>{`${f.id}: ${f.name}`}</p>)
-      : "There are no funfics in the database"
+  function funficsTable(funfics) {
+    return (
+      <Table variant="dark" striped bordered hover>
+        <thead>
+        <tr>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>Tags</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Rating</th>
+        </tr>
+        </thead>
+        <tbody>
+        {funfics.map(f => (
+          <tr key={f.id} onClick={() => readFunfic(f.id)}>
+            <td>{f.author}</td>
+            <td>{f.genre}</td>
+            <td>{f.tags.join(", ")}</td>
+            <td>{f.name}</td>
+            <td>{f.description}</td>
+            <td>{f.rating}</td>
+          </tr>
+        ))
+        }
+        </tbody>
+
+      </Table>
+    )
+  }
+
+  const funficsRepresentation = (
+    funfics.length ? funficsTable(funfics) : "There are no funfics in the database"
   )
 
-  const loadedFunfics = loadingFunfics ? spinner : mappedFunfics;
+  const loadedFunfics = loadingFunfics ? spinner : funficsRepresentation;
 
   return (
     <div className="App">
