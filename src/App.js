@@ -9,14 +9,17 @@ import {AuthContext} from "./contexts/AuthContext";
 import {useAuth} from "./hooks/auth.hook";
 import Login from "./components/userActivity/Login";
 import Register from "./components/userActivity/Register";
+import ShortcutsListener from "./components/ShortcutsListener";
 
 function App() {
   const {login, logout, token} = useAuth();
+
   return (
     <AuthContext.Provider value={{
       login, logout, token, isAuthenticated: !!token
     }}>
       <Router>
+        <ShortcutsListener/>
         <BaseNavBar/>
         <Switch>
           <Route path={"/editor"}>

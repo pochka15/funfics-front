@@ -6,7 +6,7 @@ function signIn(formData, responseDataHandler, errorHandler) {
 }
 
 function signUp(formData, responseDataHandler, errorHandler) {
-  send(formData, Globals.Register_URL, {}, responseDataHandler, errorHandler)
+  send(formData, Globals.REGISTER_URL, {}, responseDataHandler, errorHandler)
 }
 
 export {signIn, signUp};
