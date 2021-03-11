@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {Button, Container, Form} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {signUp} from "../../utils/userActivityApi";
+import {signUp} from "../../api/userActivityApi";
 import {useHistory} from "react-router-dom";
 
 function Register() {

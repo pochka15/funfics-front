@@ -6,4 +6,18 @@ function send(data, url, config, responseDataHandler, errorHandler) {
     .catch(error => errorHandler(error));
 }
 
-export {send};
+function receiveData(url, config, responseDataHandler, errorHandler) {
+  axios.get(url.toString(), config)
+    .then(response => responseDataHandler(response.data))
+    .catch(error => errorHandler(error))
+}
+
+export {send, receiveData};
+
+export const defaultAuthConfig = token => {
+  return {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    }
+  };
+}

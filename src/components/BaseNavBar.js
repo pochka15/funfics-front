@@ -8,7 +8,6 @@ function BaseNavBar() {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Funfics</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/editor">Editor</Nav.Link>
@@ -26,6 +25,14 @@ function BaseNavBar() {
           <Button variant="outline-success">Search</Button>
         </Form>
       </Navbar.Collapse>
+      <a href={"/personal"}>
+        <img src={"person-bounding-box.svg"}
+             style={{paddingLeft: 8}}
+             width="40"
+             height="40"
+             alt="personal"/>
+      </a>
+      <Navbar.Toggle aria-controls="basic-navbar-nav"/>
     </Navbar>
   );
 }

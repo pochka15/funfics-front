@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {AuthContext} from "../../contexts/AuthContext";
 import {Button, Container, Form} from "react-bootstrap";
-import {signIn} from "../../utils/userActivityApi";
+import {signIn} from "../../api/userActivityApi";
 import {useHistory} from "react-router-dom";
 import {useForm} from "react-hook-form";
 

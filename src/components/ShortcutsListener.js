@@ -8,6 +8,7 @@ function EnableCustomHotkeys() {
   useHotkeys('ctrl+alt+l', () => history.push("/login"));
   useHotkeys('ctrl+alt+r', () => history.push("/register"));
   useHotkeys('ctrl+alt+e', () => history.push("/editor"));
+  useHotkeys('ctrl+alt+p', () => history.push("/personal"));
   return (<div/>)
 }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
-import FunficsList from "./components/funfics/FunficsList";
 import FunficForm from "./components/funfics/FunficForm";
 import FunficRenderer from "./components/funfics/FunficRenderer";
 import BaseNavBar from "./components/BaseNavBar";
@@ -10,6 +9,8 @@ import {useAuth} from "./hooks/auth.hook";
 import Login from "./components/userActivity/Login";
 import Register from "./components/userActivity/Register";
 import ShortcutsListener from "./components/ShortcutsListener";
+import UserAccount from "./components/UserAccount";
+import AllFunfics from "./components/funfics/AllFunfics";
 
 function App() {
   const {login, logout, token} = useAuth();
@@ -25,6 +26,9 @@ function App() {
           <Route path={"/editor"}>
             <FunficForm/>
           </Route>
+          <Route path={"/personal"}>
+            <UserAccount/>
+          </Route>
           <Route path={"/login"}>
             <Login/>
           </Route>
@@ -34,7 +38,7 @@ function App() {
           <Route path={"/read/:id"}>
             <FunficRenderer/>
           </Route>
-          <Route path={"/"} component={FunficsList}/>
+          <Route path={"/"} component={AllFunfics}/>
         </Switch>
       </Router>
     </AuthContext.Provider>

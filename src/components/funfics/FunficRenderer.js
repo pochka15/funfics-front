@@ -3,7 +3,7 @@ import {Container} from "react-bootstrap";
 import MarkdownRenderer from "../markdown/MarkdownRenderer";
 import {useParams} from "react-router-dom";
 import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
-import {fetchFunficById} from "../../utils/funficsApi";
+import {fetchFunficById} from "../../api/funficsApi";
 
 function FunficRenderer() {
   const {id} = useParams();
