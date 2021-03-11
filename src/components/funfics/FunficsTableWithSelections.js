@@ -24,7 +24,6 @@ function FunficsTableWithSelections(props) {
 
   useEffect(() => {
     onSelectionsChanged(selections);
-    // if some of checkboxes are checked then render header checkbox in indeterminate style
     ReactDOM.findDOMNode(headerCheckboxRef.current).indeterminate = areAllIndeterminate(funfics)
   }, [funfics, areAllIndeterminate, selections, onSelectionsChanged])
 

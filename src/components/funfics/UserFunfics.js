@@ -10,6 +10,8 @@ import {AuthContext} from "../../contexts/AuthContext";
 function UserFunfics() {
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [funfics, setFunfics] = useState(undefined)
+  // It's a hack. Didn't find better solution to keep checkboxes in a consistent state after deleting table rows
+  const [tableKeyToRemount, setTableKeyToRemount] = useState(0)
   const [selectedIdsToFunfics, setSelectedIdsToFunfics] = useState(new Map())
   const {isAuthenticated, token} = React.useContext(AuthContext)
   const {handleSubmit} = useForm();
@@ -32,7 +34,10 @@ function UserFunfics() {
     deleteUserFunfics(
       auth.token,
       Array.from(selectedIdsToFunfics.keys()),
-      () => setFunfics(notSelectedFunfics),
+      () => {
+        setFunfics(notSelectedFunfics);
+        setTableKeyToRemount(tableKeyToRemount ? 0 : 1);
+      },
       error => console.log(error.message))
   }
 
@@ -51,7 +56,8 @@ function UserFunfics() {
   const spinnerOrTable = (
     funfics === undefined
       ? <CustomSpinner/>
-      : <FunficsTableWithCheckboxes onSelectionsChanged={updateIdToFunficsMap} funfics={funfics}/>
+      :
+      <FunficsTableWithCheckboxes key={tableKeyToRemount} onSelectionsChanged={updateIdToFunficsMap} funfics={funfics}/>
   )
 
   return (
