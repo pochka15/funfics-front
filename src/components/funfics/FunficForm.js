@@ -4,7 +4,7 @@ import MarkdownEditor from "../markdown/MarkdownEditor";
 import {useForm} from "react-hook-form";
 import SuccessAlert from "../bootstrapWrappers/SuccessAlert";
 import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
-import {save} from "../../utils/funficsApi";
+import {save} from "../../api/funficsApi";
 import {AuthContext} from "../../contexts/AuthContext";
 
 const SUCCESS_MESSAGE_TYPE = "success";
