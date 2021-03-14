@@ -1,10 +1,24 @@
+const url = path => new URL(path, process.env.REACT_APP_API_URL)
+
 export default class ApiUrls {
-  static ALL_FUNFICS = new URL('/funfics', process.env.REACT_APP_API_URL);
-  static PERSONAL_FUNFICS = new URL('/personal-funfics', process.env.REACT_APP_API_URL);
-  static SAVE_FUNFIC = new URL('/save', process.env.REACT_APP_API_URL);
-  static DELETE_FUNFIC = new URL('/delete', process.env.REACT_APP_API_URL);
-  static SINGLE_FUNFIC = new URL('/funfic', process.env.REACT_APP_API_URL);
-  static LOGIN = new URL('/login', process.env.REACT_APP_API_URL);
-  static CHANGE_PASSWORD = new URL('/password', process.env.REACT_APP_API_URL);
-  static REGISTER = new URL('/register', process.env.REACT_APP_API_URL);
+  // Funfics
+  static ALL_FUNFICS = url('/funfics');
+  static PERSONAL_FUNFICS = url('/personal-funfics');
+  static SAVE_FUNFIC = url('/save');
+  static DELETE_FUNFIC = url('/delete');
+  static SINGLE_FUNFIC = url('/funfic');
+
+  // Activity
+  static LOGIN = url('/login');
+  static CHANGE_PASSWORD = url('/password');
+  static REGISTER = url('/register');
+
+  // Admin
+  static ADMIN_PAGE = url('/admin');
+  static ADMIN_USERS = url('/admin/users');
+  static ADMIN_DELETE_USER = url('/admin/delete-user')
+  static ADMIN_FETCH_USER = url('/admin/fetch-user')
+  static ADMIN_BLOCK_USER = url('/admin/block-user')
+  static ADMIN_SET_USER_ROLES = url('/admin/set-user-roles')
+  static MAKE_ADMIN = url('/admin/make-admin')
 };

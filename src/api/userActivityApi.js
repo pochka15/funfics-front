@@ -11,7 +11,7 @@ function signIn(formData, responseDataHandler, errorHandler) {
 }
 
 /**
- * @param formData should contain username and password and email
+ * @param formData should contain username, password, email and isAdmin
  * @param {function(any)} responseDataHandler
  * @param {function(any)} errorHandler
  */

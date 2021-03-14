@@ -11,6 +11,8 @@ import Register from "./components/userActivity/Register";
 import ShortcutsListener from "./components/ShortcutsListener";
 import UserAccount from "./components/UserAccount";
 import AllFunfics from "./components/funfics/AllFunfics";
+import Admin from "./components/admin/Admin";
+import UserSettings from "./components/admin/UserSettings";
 
 function App() {
   const {login, logout, token} = useAuth();
@@ -38,6 +40,8 @@ function App() {
           <Route path={"/read/:id"}>
             <FunficRenderer/>
           </Route>
+          <Route path={"/admin/user-settings/:id"} component={UserSettings}/>
+          <Route path={"/admin"} component={Admin}/>
           <Route path={"/"} component={AllFunfics}/>
         </Switch>
       </Router>

@@ -39,6 +39,9 @@ function Register() {
           <Form.Label>Password</Form.Label>
           <Form.Control name="password" ref={register} type="password" placeholder="Password"/>
         </Form.Group>
+        <Form.Group controlId="formIsAdmin">
+          <Form.Check name="isAdmin" ref={register} label="Admin"/>
+        </Form.Group>
         <Button variant="primary" type="submit">
           Submit
         </Button>
