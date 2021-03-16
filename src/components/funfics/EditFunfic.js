@@ -32,9 +32,13 @@ function EditFunfic() {
     }
   }
 
+  function withTagsAsString(funfic) {
+    return {...funfic, tags: funfic.tags.join(' ')};
+  }
+
   return fetchedFunfic
     ? <FunficEditor onSaveFunfic={saveEditedFunfic}
-                    defaultFunficData={fetchedFunfic}/>
+                    defaultFunficData={withTagsAsString(fetchedFunfic)}/>
     : <CustomSpinner/>;
 }
 
