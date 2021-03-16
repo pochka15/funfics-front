@@ -5,6 +5,7 @@ export default class ApiUrls {
   static ALL_FUNFICS = url('/funfics');
   static PERSONAL_FUNFICS = url('/personal-funfics');
   static SAVE_FUNFIC = url('/save');
+  static UPDATE_FUNFIC = url('/update');
   static DELETE_FUNFIC = url('/delete');
   static SINGLE_FUNFIC = url('/funfic');
 

@@ -11,6 +11,10 @@ function save(funfic, token, responseDataHandler, errorHandler) {
   send(funfic, ApiUrls.SAVE_FUNFIC, defaultAuthConfig(token), responseDataHandler, errorHandler)
 }
 
+function update(funfic, token, responseDataHandler, errorHandler) {
+  send(funfic, ApiUrls.UPDATE_FUNFIC, defaultAuthConfig(token), responseDataHandler, errorHandler)
+}
+
 /**
  * @param {number} funficId
  * @param {function(JSON)} responseDataHandler
@@ -51,4 +55,4 @@ function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
   send({funficIds}, ApiUrls.DELETE_FUNFIC, defaultAuthConfig(token), onSuccess, errorHandler)
 }
 
-export {save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics};
+export {save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics, update};

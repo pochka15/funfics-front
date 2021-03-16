@@ -12,8 +12,7 @@ const converter = new Showdown.Converter({
 });
 
 
-export default function MarkdownEditor({onContentUpdated}) {
-  const [content, setContent] = React.useState("**Hello world!**");
+export default function MarkdownEditor({content, setContent}) {
   const [selectedTab, setSelectedTab] = React.useState("write");
 
   return (
@@ -21,7 +20,6 @@ export default function MarkdownEditor({onContentUpdated}) {
       value={content}
       onChange={newContent => {
         setContent(newContent);
-        onContentUpdated(newContent);
       }}
       selectedTab={selectedTab}
       onTabChange={setSelectedTab}
