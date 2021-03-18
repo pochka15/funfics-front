@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
-import {Button, Form, FormControl, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {AuthContext} from "../contexts/AuthContext";
+import {Form, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {AuthContext} from "../../contexts/AuthContext";
+import './searchbar.css'
+import FunficsSelectSearch from "./FunficsSelectSearch";
 
 function BaseNavBar() {
   const auth = useContext(AuthContext)
@@ -21,8 +23,7 @@ function BaseNavBar() {
           </NavDropdown>
         </Nav>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-          <Button variant="outline-success">Search</Button>
+          <FunficsSelectSearch/>
         </Form>
       </Navbar.Collapse>
       <a href={"/personal"}>

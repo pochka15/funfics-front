@@ -55,4 +55,8 @@ function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
   send({funficIds}, ApiUrls.DELETE_FUNFIC, defaultAuthConfig(token), onSuccess, errorHandler)
 }
 
+export function searchFunficsByQuery(query, jsonDataHandler, errorHandler) {
+  receiveData(ApiUrls.SEARCH_FUNFICS, {params: {query}}, jsonDataHandler, errorHandler)
+}
+
 export {save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics, update};

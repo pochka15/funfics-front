@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import FunficPage from "./components/funfics/FunficPage";
-import BaseNavBar from "./components/BaseNavBar";
+import BaseNavBar from "./components/navbar/BaseNavBar";
 import {AuthContext} from "./contexts/AuthContext";
 import {useAuth} from "./hooks/auth.hook";
 import Login from "./components/userActivity/Login";

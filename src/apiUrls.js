@@ -8,6 +8,7 @@ export default class ApiUrls {
   static UPDATE_FUNFIC = url('/update');
   static DELETE_FUNFIC = url('/delete');
   static SINGLE_FUNFIC = url('/funfic');
+  static SEARCH_FUNFICS = url('/search')
 
   // Activity
   static LOGIN = url('/login');
