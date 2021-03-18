@@ -30,7 +30,7 @@ function UsersTable({users, reloadUsers}) {
 
   const fields = [
     {key: 'name', _style: {width: '40%'}},
-    'registered',
+    'registrationDate',
     {key: 'roles', _style: {width: '20%'}},
     {key: 'status', _style: {width: '20%'}},
     {
@@ -123,7 +123,8 @@ function UsersTable({users, reloadUsers}) {
                   <h4>
                     {item.username}
                   </h4>
-                  <p className="text-muted">User since: {item.registered}</p>
+                  <p className="text-muted">User since: {item.registrationIsoDateTime}</p>
+                  <p className="text-muted">Last login: {item.lastLoginIsoDateTime}</p>
                   <CButton onClick={() => history.push(`/admin/user-settings/${item.id}`)} size="sm" color="info">
                     User Settings
                   </CButton>

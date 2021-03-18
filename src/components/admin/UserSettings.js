@@ -15,11 +15,11 @@ function UserSettings() {
   useEffect(() => {
     if (auth.isAuthenticated) {
       fetchUser(id, auth.token, (user) => {
-        setUser(new User(
-          user.enabled ? "Active" : "Inactive",
+        setUser(new User(user.enabled ? "Active" : "Inactive",
           user.name,
           user.id,
-          user.registrationDate,
+          user.registrationIsoDateTime,
+          user.lastLoginIsoDateTime,
           user.roles.join(", ")));
       }, (error) => console.log(error))
     }
@@ -29,7 +29,7 @@ function UserSettings() {
     <ul>
       <li>Name: {user.name}</li>
       <li>Id: {user.id}</li>
-      <li>Registered: {user.registered}</li>
+      <li>Registered: {user.registrationIsoDateTime.split('T')[0]}</li>
       <li>Status: {user.status}</li>
       <li>Roles: {user.roles}</li>
     </ul>
