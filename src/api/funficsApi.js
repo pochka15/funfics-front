@@ -26,6 +26,16 @@ function fetchFunficById(funficId, responseDataHandler, errorHandler) {
   }, responseDataHandler, errorHandler)
 }
 
+function fetchFunficComments(funficId, responseDataHandler, errorHandler) {
+  receiveData(ApiUrls.FUNFIC_COMMENTS, {
+    params: {id: funficId}
+  }, responseDataHandler, errorHandler)
+}
+
+function saveComment(content, funficId, token, onSuccess, errorHandler) {
+  send({content, funficId}, ApiUrls.SAVE_COMMENT, defaultAuthConfig(token), onSuccess, errorHandler)
+}
+
 /**
  * Fetch all the funfics without their contents
  * @param {function(JSON)} jsonDataHandler
@@ -59,4 +69,7 @@ export function searchFunficsByQuery(query, jsonDataHandler, errorHandler) {
   receiveData(ApiUrls.SEARCH_FUNFICS, {params: {query}}, jsonDataHandler, errorHandler)
 }
 
-export {save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics, update};
+export {
+  save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics, update,
+  fetchFunficComments, saveComment
+};

@@ -9,6 +9,8 @@ export default class ApiUrls {
   static DELETE_FUNFIC = url('/delete');
   static SINGLE_FUNFIC = url('/funfic');
   static SEARCH_FUNFICS = url('/search')
+  static FUNFIC_COMMENTS = url('/comments')
+  static SAVE_COMMENT = url('/save-comment')
 
   // Activity
   static LOGIN = url('/login');
@@ -23,4 +25,7 @@ export default class ApiUrls {
   static ADMIN_BLOCK_USER = url('/admin/block-user')
   static ADMIN_SET_USER_ROLES = url('/admin/set-user-roles')
   static MAKE_ADMIN = url('/admin/make-admin')
+
+  // WebSocket
+  static WEBSOCKET_ENDPOINT = url('/comments-websocket')
 };
