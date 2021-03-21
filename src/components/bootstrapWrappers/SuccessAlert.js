@@ -1,14 +1,13 @@
-import React from 'react';
-import {Form} from "react-bootstrap";
+import React from "react";
+import { Form } from "react-bootstrap";
 
-function SuccessAlert({successMessage}) {
+function SuccessAlert({ successMessage }) {
   return (
     <Form.Group>
       <div className="alert alert-success" role="alert">
         {successMessage}
       </div>
     </Form.Group>
-
   );
 }
 

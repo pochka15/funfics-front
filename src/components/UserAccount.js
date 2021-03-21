@@ -1,5 +1,5 @@
-import React from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import ChangePasswordForm from "./userActivity/ChangePasswordForm";
 import UserFunfics from "./funfics/UserFunfics";
 
@@ -8,10 +8,10 @@ function UserAccount() {
     <Container>
       <Row>
         <Col>
-          <ChangePasswordForm/>
+          <ChangePasswordForm />
         </Col>
         <Col>
-          <UserFunfics/>
+          <UserFunfics />
         </Col>
       </Row>
     </Container>

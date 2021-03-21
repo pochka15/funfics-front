@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 import SelectSearch from "react-select-search";
-import {searchFunficsByQuery} from "../../api/funficsApi";
-import {useHistory} from "react-router-dom";
-
+import { searchFunficsByQuery } from "../../api/funficsApi";
+import { useHistory } from "react-router-dom";
 
 /**
  * Searchbar component which searches for funfics.
@@ -14,12 +13,14 @@ function FunficsSelectSearch() {
 
   function searchFunfics(query) {
     return new Promise((resolve, reject) => {
-      if (query.length === 0)
-        resolve([])
+      if (query.length === 0) resolve([]);
       else
-        searchFunficsByQuery(query,
-          funfics => resolve(funfics.map(f => ({name: f.name, value: f.id}))),
-          reject)
+        searchFunficsByQuery(
+          query,
+          (funfics) =>
+            resolve(funfics.map((f) => ({ name: f.name, value: f.id }))),
+          reject
+        );
     });
   }
 

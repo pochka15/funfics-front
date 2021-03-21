@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 import UserManagement from "./UserManagement";
-
 
 function Admin() {
   return (
     <div>
-      <UserManagement/>
+      <UserManagement />
     </div>
   );
 }

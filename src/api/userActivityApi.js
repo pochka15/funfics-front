@@ -1,5 +1,5 @@
 import ApiUrls from "../apiUrls";
-import {defaultAuthConfig, send} from "../utils/communicationWithServer";
+import { defaultAuthConfig, send } from "../utils/communicationWithServer";
 
 /**
  * @param formData should contain username and password
@@ -7,7 +7,7 @@ import {defaultAuthConfig, send} from "../utils/communicationWithServer";
  * @param {function(any)} errorHandler
  */
 function signIn(formData, responseDataHandler, errorHandler) {
-  send(formData, ApiUrls.LOGIN, {}, responseDataHandler, errorHandler)
+  send(formData, ApiUrls.LOGIN, {}, responseDataHandler, errorHandler);
 }
 
 /**
@@ -16,7 +16,7 @@ function signIn(formData, responseDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function signUp(formData, responseDataHandler, errorHandler) {
-  send(formData, ApiUrls.REGISTER, {}, responseDataHandler, errorHandler)
+  send(formData, ApiUrls.REGISTER, {}, responseDataHandler, errorHandler);
 }
 
 /**
@@ -26,12 +26,20 @@ function signUp(formData, responseDataHandler, errorHandler) {
  * @param {function(any)} responseDataHandler
  * @param {function(any)} errorHandler
  */
-function changePassword(token, currentPassword, newPassword, responseDataHandler, errorHandler) {
-  send({currentPassword, newPassword},
+function changePassword(
+  token,
+  currentPassword,
+  newPassword,
+  responseDataHandler,
+  errorHandler
+) {
+  send(
+    { currentPassword, newPassword },
     ApiUrls.CHANGE_PASSWORD,
     defaultAuthConfig(token),
     responseDataHandler,
-    errorHandler);
+    errorHandler
+  );
 }
 
-export {signIn, signUp, changePassword};
+export { signIn, signUp, changePassword };

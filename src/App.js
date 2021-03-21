@@ -1,10 +1,10 @@
-import React from 'react'
-import './App.css';
-import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FunficPage from "./components/funfics/FunficPage";
 import BaseNavBar from "./components/navbar/BaseNavBar";
-import {AuthContext} from "./contexts/AuthContext";
-import {useAuth} from "./hooks/auth.hook";
+import { AuthContext } from "./contexts/AuthContext";
+import { useAuth } from "./hooks/auth.hook";
 import Login from "./components/userActivity/Login";
 import Register from "./components/userActivity/Register";
 import ShortcutsListener from "./components/ShortcutsListener";
@@ -16,37 +16,42 @@ import EditFunfic from "./components/funfics/EditFunfic";
 import CreateNewFunfic from "./components/funfics/CreateNewFunfic";
 
 function App() {
-  const {login, logout, token} = useAuth();
+  const { login, logout, token } = useAuth();
 
   return (
-    <AuthContext.Provider value={{
-      login, logout, token, isAuthenticated: !!token
-    }}>
+    <AuthContext.Provider
+      value={{
+        login,
+        logout,
+        token,
+        isAuthenticated: !!token,
+      }}
+    >
       <Router>
-        <ShortcutsListener/>
-        <BaseNavBar/>
+        <ShortcutsListener />
+        <BaseNavBar />
         <Switch>
           <Route path={"/editor"}>
-            <CreateNewFunfic/>
+            <CreateNewFunfic />
           </Route>
           <Route path={"/edit-funfic/:id"}>
-            <EditFunfic/>
+            <EditFunfic />
           </Route>
           <Route path={"/personal"}>
-            <UserAccount/>
+            <UserAccount />
           </Route>
           <Route path={"/login"}>
-            <Login/>
+            <Login />
           </Route>
           <Route path={"/register"}>
-            <Register/>
+            <Register />
           </Route>
           <Route path={"/read/:id"}>
-            <FunficPage/>
+            <FunficPage />
           </Route>
-          <Route path={"/admin/user-settings/:id"} component={UserSettings}/>
-          <Route path={"/admin"} component={Admin}/>
-          <Route path={"/"} component={AllFunfics}/>
+          <Route path={"/admin/user-settings/:id"} component={UserSettings} />
+          <Route path={"/admin"} component={Admin} />
+          <Route path={"/"} component={AllFunfics} />
         </Switch>
       </Router>
     </AuthContext.Provider>

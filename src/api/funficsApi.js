@@ -1,5 +1,9 @@
 import ApiUrls from "../apiUrls";
-import {defaultAuthConfig, receiveData, send} from "../utils/communicationWithServer";
+import {
+  defaultAuthConfig,
+  receiveData,
+  send,
+} from "../utils/communicationWithServer";
 
 /**
  * @param funfic
@@ -8,11 +12,23 @@ import {defaultAuthConfig, receiveData, send} from "../utils/communicationWithSe
  * @param {function(any)} errorHandler
  */
 function save(funfic, token, responseDataHandler, errorHandler) {
-  send(funfic, ApiUrls.SAVE_FUNFIC, defaultAuthConfig(token), responseDataHandler, errorHandler)
+  send(
+    funfic,
+    ApiUrls.SAVE_FUNFIC,
+    defaultAuthConfig(token),
+    responseDataHandler,
+    errorHandler
+  );
 }
 
 function update(funfic, token, responseDataHandler, errorHandler) {
-  send(funfic, ApiUrls.UPDATE_FUNFIC, defaultAuthConfig(token), responseDataHandler, errorHandler)
+  send(
+    funfic,
+    ApiUrls.UPDATE_FUNFIC,
+    defaultAuthConfig(token),
+    responseDataHandler,
+    errorHandler
+  );
 }
 
 /**
@@ -21,19 +37,35 @@ function update(funfic, token, responseDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchFunficById(funficId, responseDataHandler, errorHandler) {
-  receiveData(ApiUrls.SINGLE_FUNFIC, {
-    params: {id: funficId}
-  }, responseDataHandler, errorHandler)
+  receiveData(
+    ApiUrls.SINGLE_FUNFIC,
+    {
+      params: { id: funficId },
+    },
+    responseDataHandler,
+    errorHandler
+  );
 }
 
 function fetchFunficComments(funficId, responseDataHandler, errorHandler) {
-  receiveData(ApiUrls.FUNFIC_COMMENTS, {
-    params: {id: funficId}
-  }, responseDataHandler, errorHandler)
+  receiveData(
+    ApiUrls.FUNFIC_COMMENTS,
+    {
+      params: { id: funficId },
+    },
+    responseDataHandler,
+    errorHandler
+  );
 }
 
 function saveComment(content, funficId, token, onSuccess, errorHandler) {
-  send({content, funficId}, ApiUrls.SAVE_COMMENT, defaultAuthConfig(token), onSuccess, errorHandler)
+  send(
+    { content, funficId },
+    ApiUrls.SAVE_COMMENT,
+    defaultAuthConfig(token),
+    onSuccess,
+    errorHandler
+  );
 }
 
 /**
@@ -42,7 +74,7 @@ function saveComment(content, funficId, token, onSuccess, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
-  receiveData(ApiUrls.ALL_FUNFICS, {}, jsonDataHandler, errorHandler)
+  receiveData(ApiUrls.ALL_FUNFICS, {}, jsonDataHandler, errorHandler);
 }
 
 /**
@@ -51,7 +83,12 @@ function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchUserFunfics(token, jsonDataHandler, errorHandler) {
-  receiveData(ApiUrls.PERSONAL_FUNFICS, defaultAuthConfig(token), jsonDataHandler, errorHandler)
+  receiveData(
+    ApiUrls.PERSONAL_FUNFICS,
+    defaultAuthConfig(token),
+    jsonDataHandler,
+    errorHandler
+  );
 }
 
 /**
@@ -62,14 +99,31 @@ function fetchUserFunfics(token, jsonDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
-  send({funficIds}, ApiUrls.DELETE_FUNFIC, defaultAuthConfig(token), onSuccess, errorHandler)
+  send(
+    { funficIds },
+    ApiUrls.DELETE_FUNFIC,
+    defaultAuthConfig(token),
+    onSuccess,
+    errorHandler
+  );
 }
 
 export function searchFunficsByQuery(query, jsonDataHandler, errorHandler) {
-  receiveData(ApiUrls.SEARCH_FUNFICS, {params: {query}}, jsonDataHandler, errorHandler)
+  receiveData(
+    ApiUrls.SEARCH_FUNFICS,
+    { params: { query } },
+    jsonDataHandler,
+    errorHandler
+  );
 }
 
 export {
-  save, fetchFunficById, fetchFunficsWithoutContent, fetchUserFunfics, deleteUserFunfics, update,
-  fetchFunficComments, saveComment
+  save,
+  fetchFunficById,
+  fetchFunficsWithoutContent,
+  fetchUserFunfics,
+  deleteUserFunfics,
+  update,
+  fetchFunficComments,
+  saveComment,
 };

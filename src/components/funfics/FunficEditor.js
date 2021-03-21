@@ -1,7 +1,7 @@
-import React from 'react'
-import {Button, Container, Form} from "react-bootstrap";
+import React from "react";
+import { Button, Container, Form } from "react-bootstrap";
 import MarkdownEditor from "../markdown/MarkdownEditor";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const emptyDefaultFunficData = {
   name: "",
@@ -9,13 +9,17 @@ const emptyDefaultFunficData = {
   genre: "",
   tags: "",
   content: "",
-}
+};
 
-export default function FunficEditor({defaultFunficData, onSaveFunfic, onFormChanged}) {
-  defaultFunficData = defaultFunficData || emptyDefaultFunficData
+export default function FunficEditor({
+  defaultFunficData,
+  onSaveFunfic,
+  onFormChanged,
+}) {
+  defaultFunficData = defaultFunficData || emptyDefaultFunficData;
 
-  const {register, handleSubmit} = useForm({
-    defaultValues: defaultFunficData
+  const { register, handleSubmit } = useForm({
+    defaultValues: defaultFunficData,
   });
   const [content, setContent] = React.useState(defaultFunficData.content);
 
@@ -38,28 +42,27 @@ export default function FunficEditor({defaultFunficData, onSaveFunfic, onFormCha
       <Form onChange={onFormChanged} onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="genre">
           <Form.Label>Genre</Form.Label>
-          <Form.Control name="genre" ref={register} as="input">
-          </Form.Control>
+          <Form.Control name="genre" ref={register} as="input"></Form.Control>
         </Form.Group>
         <Form.Group controlId="tags">
           <Form.Label>Tags</Form.Label>
-          <Form.Control
-            name="tags"
-            ref={register}
-            as="input">
-          </Form.Control>
+          <Form.Control name="tags" ref={register} as="input"></Form.Control>
         </Form.Group>
         <Form.Group controlId="name">
           <Form.Label>Funfic name</Form.Label>
-          <Form.Control name="name" ref={register} as="input">
-          </Form.Control>
+          <Form.Control name="name" ref={register} as="input"></Form.Control>
         </Form.Group>
         <Form.Group controlId="description">
           <Form.Label>Description</Form.Label>
-          <Form.Control name="description" ref={register} as="textarea" rows={3}/>
+          <Form.Control
+            name="description"
+            ref={register}
+            as="textarea"
+            rows={3}
+          />
         </Form.Group>
         <Form.Group>
-          <MarkdownEditor content={content} setContent={setContent}/>
+          <MarkdownEditor content={content} setContent={setContent} />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit

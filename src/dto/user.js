@@ -8,8 +8,20 @@
  * @returns {{roles, name, registered, id, status}}
  * @constructor
  */
-export default function User(status, name, id, registrationIsoDateTime, lastLoginIsoDateTime, roles) {
+export default function User(
+  status,
+  name,
+  id,
+  registrationIsoDateTime,
+  lastLoginIsoDateTime,
+  roles
+) {
   return {
-    status, name, id, registrationIsoDateTime, lastLoginIsoDateTime, roles
-  }
+    status,
+    name,
+    id,
+    registrationIsoDateTime,
+    lastLoginIsoDateTime,
+    roles,
+  };
 }
