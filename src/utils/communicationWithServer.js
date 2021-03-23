@@ -11,7 +11,7 @@ function receiveData(url, config, responseDataHandler, errorHandler) {
   axios
     .get(url.toString(), config)
     .then((response) => responseDataHandler(response.data))
-    .catch((error) => errorHandler(error));
+    .catch(errorHandler);
 }
 
 export { send, receiveData };

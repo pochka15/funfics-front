@@ -2,17 +2,26 @@ import React, { useContext } from "react";
 import { Button, Card, Form, ListGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext";
+import useWebSocketComments from "../../hooks/webSocketComments.hook";
+import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
 
 /**
  * Component for rendering funfic comments and posting a personal comment
- * @param comments
- * @param onSubmitComment
+ * @param funficId - the id of the funfic which is used to fetch comments.
+ * @param freeze - whether the component should be frozen(non-interactive)
  * @returns {JSX.Element}
  * @constructor
  */
-function Comments({ comments, onSubmitComment }) {
-  const { register, handleSubmit } = useForm();
+function FunficComments({ funficId, freeze }) {
+  const { register, handleSubmit, reset, watch } = useForm();
   const auth = useContext(AuthContext);
+  const { comments, errors, post } = useWebSocketComments(funficId);
+  const commentContent = watch("commentContent", "");
+
+  function onPostComment(commentContent) {
+    post(commentContent);
+    reset();
+  }
 
   return (
     <div>
@@ -23,10 +32,16 @@ function Comments({ comments, onSubmitComment }) {
             <ListGroup.Item key={comment.id}>{comment.content}</ListGroup.Item>
           ))}
         </ListGroup>
-        <Form onSubmit={handleSubmit(onSubmitComment)}>
+        <Form
+          onSubmit={handleSubmit(({ commentContent }) =>
+            onPostComment(commentContent)
+          )}
+        >
           <Form.Group controlId="commentContent">
             <Form.Label>Enter your comment</Form.Label>
             <Form.Control
+              disabled={!auth.isAuthenticated || freeze}
+              defaultValue=""
               name="commentContent"
               ref={register}
               as="textarea"
@@ -34,16 +49,19 @@ function Comments({ comments, onSubmitComment }) {
             />
           </Form.Group>
           <Button
-            disabled={!auth.isAuthenticated}
+            disabled={!auth.isAuthenticated || freeze || !commentContent.length}
             variant="primary"
             type="submit"
           >
             Save comment
           </Button>
+          <Form.Group>
+            {errors.length ? <ErrorAlert errorMessage={errors} /> : ""}
+          </Form.Group>
         </Form>
       </Card>
     </div>
   );
 }
 
-export default Comments;
+export default FunficComments;
