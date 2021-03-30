@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import React, {useContext, useEffect, useState} from "react";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import MarkdownRenderer from "../markdown/MarkdownRenderer";
-import { useHistory, useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
-import { fetchFunficById } from "../../api/funficsApi";
-import { AuthContext } from "../../contexts/AuthContext";
+import {fetchFunficById} from "../../api/funficsApi";
+import {AuthContext} from "../../contexts/AuthContext";
 import jwt_decode from "jwt-decode";
 import CustomSpinner from "../bootstrapWrappers/CustomSpinner";
 import FunficComments from "./FunficComments";
+import FunficRating from "./FunficRating";
 
 /**
  * Parent component for viewing, commenting, ... funfic data
@@ -18,8 +19,8 @@ function FunficPage() {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState();
   const [funfic, setFunfic] = useState(undefined);
-  const [curUserIsAuthor, setCurUserIsAuthor] = useState();
-  const [freezeCommentsComponent, setFreezeCommentsComponent] = useState();
+  const [curUserIsAuthor, setCurUserIsAuthor] = useState(false);
+  const [freezeCommentsComponent, setFreezeCommentsComponent] = useState(true);
   const auth = useContext(AuthContext);
   const history = useHistory();
 
@@ -49,6 +50,7 @@ function FunficPage() {
     <Container>
       <Row>
         <Col>
+          <FunficRating id={id}/>
           <Button
             disabled={!(funfic && curUserIsAuthor)}
             onClick={() => history.push(`/edit-funfic/${id}`)}

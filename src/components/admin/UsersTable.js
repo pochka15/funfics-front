@@ -85,6 +85,7 @@ function UsersTable({ users, reloadUsers }) {
       hover
       sorter
       pagination
+      onRowClick={(ev, index) => toggleDetails(index)}
       scopedSlots={{
         status: (item) => (
           <td>

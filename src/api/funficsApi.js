@@ -1,9 +1,5 @@
 import ApiUrls from "../apiUrls";
-import {
-  defaultAuthConfig,
-  receiveData,
-  send,
-} from "../utils/communicationWithServer";
+import {defaultAuthConfig, makeGet, makePost,} from "../utils/communicationWithServer";
 
 /**
  * @param funfic
@@ -12,7 +8,7 @@ import {
  * @param {function(any)} errorHandler
  */
 function save(funfic, token, responseDataHandler, errorHandler) {
-  send(
+  makePost(
     funfic,
     ApiUrls.SAVE_FUNFIC,
     defaultAuthConfig(token),
@@ -22,7 +18,7 @@ function save(funfic, token, responseDataHandler, errorHandler) {
 }
 
 function update(funfic, token, responseDataHandler, errorHandler) {
-  send(
+  makePost(
     funfic,
     ApiUrls.UPDATE_FUNFIC,
     defaultAuthConfig(token),
@@ -37,7 +33,7 @@ function update(funfic, token, responseDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchFunficById(funficId, responseDataHandler, errorHandler) {
-  receiveData(
+  makeGet(
     ApiUrls.SINGLE_FUNFIC,
     {
       params: { id: funficId },
@@ -48,7 +44,7 @@ function fetchFunficById(funficId, responseDataHandler, errorHandler) {
 }
 
 function fetchFunficComments(funficId, responseDataHandler, errorHandler) {
-  receiveData(
+  makeGet(
     ApiUrls.FUNFIC_COMMENTS,
     {
       params: { id: funficId },
@@ -59,7 +55,7 @@ function fetchFunficComments(funficId, responseDataHandler, errorHandler) {
 }
 
 function saveComment(content, funficId, token, onSuccess, errorHandler) {
-  send(
+  makePost(
     { content, funficId },
     ApiUrls.SAVE_COMMENT,
     defaultAuthConfig(token),
@@ -74,7 +70,7 @@ function saveComment(content, funficId, token, onSuccess, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
-  receiveData(ApiUrls.ALL_FUNFICS, {}, jsonDataHandler, errorHandler);
+  makeGet(ApiUrls.ALL_FUNFICS, {}, jsonDataHandler, errorHandler);
 }
 
 /**
@@ -83,7 +79,7 @@ function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function fetchUserFunfics(token, jsonDataHandler, errorHandler) {
-  receiveData(
+  makeGet(
     ApiUrls.PERSONAL_FUNFICS,
     defaultAuthConfig(token),
     jsonDataHandler,
@@ -99,7 +95,7 @@ function fetchUserFunfics(token, jsonDataHandler, errorHandler) {
  * @param {function(any)} errorHandler
  */
 function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
-  send(
+  makePost(
     { funficIds },
     ApiUrls.DELETE_FUNFIC,
     defaultAuthConfig(token),
@@ -109,10 +105,56 @@ function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
 }
 
 export function searchFunficsByQuery(query, jsonDataHandler, errorHandler) {
-  receiveData(
+  makeGet(
     ApiUrls.SEARCH_FUNFICS,
     { params: { query } },
     jsonDataHandler,
+    errorHandler
+  );
+}
+
+/**
+ * Check if user with the given token can rate funfic
+ * @param funficId
+ * @param token
+ * @param {function(boolean)} jsonDataHandler
+ * @param errorHandler
+ */
+export function checkIfCanRateFunfic(
+  funficId,
+  token,
+  jsonDataHandler,
+  errorHandler
+) {
+  makeGet(
+    ApiUrls.CHECK_CAN_RATE,
+    {
+      ...defaultAuthConfig(token),
+      params: { funficId },
+    },
+    jsonDataHandler,
+    errorHandler
+  );
+}
+
+export function getAverageRating(funficId, jsonDataHandler, errorHandler) {
+  makeGet(
+    ApiUrls.FUNFIC_RATING,
+    { params: { id: funficId } },
+    jsonDataHandler,
+    errorHandler
+  );
+}
+
+export function rateFunfic(funficId, rating, token, onSuccess, errorHandler) {
+  makePost(
+    {
+      funficId,
+      rating,
+    },
+    ApiUrls.RATE_FUNFIC,
+    defaultAuthConfig(token),
+    onSuccess,
     errorHandler
   );
 }

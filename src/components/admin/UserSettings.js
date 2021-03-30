@@ -4,6 +4,7 @@ import {
   blockUser,
   deleteUserById,
   fetchUser,
+  unblockUser,
   updateUserRoles,
 } from "../../api/adminApi";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -77,6 +78,15 @@ function UserSettings() {
     );
   }
 
+  function onUnblock() {
+    unblockUser(
+      id,
+      auth.token,
+      () => console.log(`Unblocked ${id}`),
+      (error) => console.log(error)
+    );
+  }
+
   return (
     <Container>
       {user ? userData : <CustomSpinner />}
@@ -90,6 +100,11 @@ function UserSettings() {
           <Col>
             <Button variant="secondary" onClick={onBlock}>
               Block
+            </Button>
+          </Col>
+          <Col>
+            <Button variant="light" onClick={onUnblock}>
+              Unblock
             </Button>
           </Col>
         </Form>

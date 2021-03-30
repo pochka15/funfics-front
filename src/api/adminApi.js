@@ -1,12 +1,12 @@
 import {
   defaultAuthConfig,
-  receiveData,
-  send,
+  makeGet,
+  makePost,
 } from "../utils/communicationWithServer";
 import ApiUrls from "../apiUrls";
 
 function wrappedReceiveData(url, id, token, responseDataHandler, errorHandler) {
-  receiveData(
+  makeGet(
     url,
     { ...defaultAuthConfig(token), params: { id: id } },
     responseDataHandler,
@@ -44,6 +44,16 @@ export function blockUser(id, token, onSuccess, errorHandler) {
   );
 }
 
+export function unblockUser(id, token, onSuccess, errorHandler) {
+  wrappedReceiveData(
+    ApiUrls.ADMIN_UNBLOCK_USER,
+    id,
+    token,
+    onSuccess,
+    errorHandler
+  );
+}
+
 /**
  * Set roles = ['Administrator'] for the given user id
  * @param id - user id
@@ -56,7 +66,7 @@ export function makeAdmin(id, token, onSuccess, errorHandler) {
 }
 
 export function updateUserRoles(id, roles, token, onSuccess, errorHandler) {
-  send(
+  makePost(
     { roles, id },
     ApiUrls.ADMIN_SET_USER_ROLES,
     defaultAuthConfig(token),

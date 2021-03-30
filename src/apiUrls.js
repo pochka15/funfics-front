@@ -11,6 +11,9 @@ export default class ApiUrls {
   static SEARCH_FUNFICS = url("/search");
   static FUNFIC_COMMENTS = url("/comments");
   static SAVE_COMMENT = url("/save-comment");
+  static CHECK_CAN_RATE = url("/can-rate");
+  static RATE_FUNFIC = url("/rate");
+  static FUNFIC_RATING = url("/funfic-rating");
 
   // Activity
   static LOGIN = url("/login");
@@ -23,6 +26,7 @@ export default class ApiUrls {
   static ADMIN_DELETE_USER = url("/admin/delete-user");
   static ADMIN_FETCH_USER = url("/admin/fetch-user");
   static ADMIN_BLOCK_USER = url("/admin/block-user");
+  static ADMIN_UNBLOCK_USER = url("/admin/unblock-user");
   static ADMIN_SET_USER_ROLES = url("/admin/set-user-roles");
   static MAKE_ADMIN = url("/admin/make-admin");
 

@@ -1,20 +1,20 @@
 import axios from "axios";
 
-function send(data, url, config, responseDataHandler, errorHandler) {
+function makePost(data, url, config, responseDataHandler, errorHandler) {
   axios
     .post(url.toString(), data, config)
     .then((response) => responseDataHandler(response.data))
     .catch((error) => errorHandler(error));
 }
 
-function receiveData(url, config, responseDataHandler, errorHandler) {
+function makeGet(url, config, responseDataHandler, errorHandler) {
   axios
     .get(url.toString(), config)
     .then((response) => responseDataHandler(response.data))
     .catch(errorHandler);
 }
 
-export { send, receiveData };
+export { makePost, makeGet };
 
 export const defaultAuthConfig = (token) => {
   return {

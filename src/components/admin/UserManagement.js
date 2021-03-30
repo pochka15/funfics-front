@@ -4,7 +4,7 @@ import CustomSpinner from "../bootstrapWrappers/CustomSpinner";
 import { Container } from "react-bootstrap";
 import {
   defaultAuthConfig,
-  receiveData,
+  makeGet,
 } from "../../utils/communicationWithServer";
 import ApiUrls from "../../apiUrls";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -16,7 +16,7 @@ function UserManagement() {
 
   const reloadUsersData = useCallback(() => {
     if (auth.isAuthenticated) {
-      receiveData(
+      makeGet(
         ApiUrls.ADMIN_USERS,
         defaultAuthConfig(auth.token),
         (usersData) =>
