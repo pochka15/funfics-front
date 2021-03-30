@@ -43,10 +43,7 @@ function FunficRating() {
       checkIfCanRateFunfic(
         id,
         auth.token,
-        (canRate) => {
-          console.log("Setting can rate: " + canRate);
-          setCanRate(canRate);
-        },
+        (canRate) => setCanRate(canRate),
         (error) =>
           console.log(
             `Error while checking if can rate the funfic: ${error.message}`
@@ -58,7 +55,7 @@ function FunficRating() {
   return (
     <Form onSubmit={handleSubmit(onSendRating)}>
       <Form.Group>
-        {averageRating && (
+        {averageRating !== undefined && (
           <div>
             <b>Funfic rating is: </b> {averageRating}
           </div>
