@@ -1,45 +1,43 @@
-import ApiUrls from "../apiUrls";
-import {defaultAuthConfig, makePost} from "../utils/communicationWithServer";
+import { swaggerClient, swaggerClientWithToken } from "../utils/swaggerUtils";
 
 /**
- * @param formData should contain username and password
- * @param {function(any)} responseDataHandler
- * @param {function(any)} errorHandler
+ * @param formData should contain at list the username and password
+ * @returns {Promise<*>}
  */
-function signIn(formData, responseDataHandler, errorHandler) {
-  makePost(formData, ApiUrls.LOGIN, {}, responseDataHandler, errorHandler);
+export async function login(formData) {
+  const client = await swaggerClient();
+  const response = await client.apis["user-activity-controller"].loginUsingPOST(
+    {},
+    {requestBody: formData}
+  );
+  return response.body;
 }
 
 /**
- * @param formData should contain username, password, email and isAdmin
- * @param {function(any)} responseDataHandler
- * @param {function(any)} errorHandler
+ * @param formData should contain at list the username, password, email and isAdmin
+ * @returns {Promise<*>}
  */
-function signUp(formData, responseDataHandler, errorHandler) {
-  makePost(formData, ApiUrls.REGISTER, {}, responseDataHandler, errorHandler);
+export async function register(formData) {
+  const client = await swaggerClient();
+  const response = await client.apis[
+    "user-activity-controller"
+    ].registerUsingPOST({}, {requestBody: formData});
+  return response.body;
 }
 
 /**
  * @param token - JWT token
  * @param currentPassword
  * @param newPassword
- * @param {function(any)} responseDataHandler
- * @param {function(any)} errorHandler
+ * @returns {Promise<*>}
  */
-function changePassword(
-  token,
-  currentPassword,
-  newPassword,
-  responseDataHandler,
-  errorHandler
-) {
-  makePost(
-    { currentPassword, newPassword },
-    ApiUrls.CHANGE_PASSWORD,
-    defaultAuthConfig(token),
-    responseDataHandler,
-    errorHandler
+export async function changePassword(token, currentPassword, newPassword) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis[
+    "user-activity-controller"
+    ].changePasswordUsingPOST(
+    {},
+    {requestBody: {currentPassword, newPassword}}
   );
+  return response.body;
 }
-
-export { signIn, signUp, changePassword };

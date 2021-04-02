@@ -15,12 +15,11 @@ function FunficsSelectSearch() {
     return new Promise((resolve, reject) => {
       if (query.length === 0) resolve([]);
       else
-        searchFunficsByQuery(
-          query,
-          (funfics) =>
-            resolve(funfics.map((f) => ({ name: f.name, value: f.id }))),
-          reject
-        );
+        searchFunficsByQuery(query)
+          .then((funfics) =>
+            resolve(funfics.map((f) => ({ name: f.name, value: f.id })))
+          )
+          .catch(reject);
     });
   }
 

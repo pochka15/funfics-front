@@ -42,15 +42,15 @@ export default function FunficEditor({
       <Form onChange={onFormChanged} onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="genre">
           <Form.Label>Genre</Form.Label>
-          <Form.Control name="genre" ref={register} as="input"></Form.Control>
+          <Form.Control name="genre" ref={register} as="input"/>
         </Form.Group>
         <Form.Group controlId="tags">
           <Form.Label>Tags</Form.Label>
-          <Form.Control name="tags" ref={register} as="input"></Form.Control>
+          <Form.Control name="tags" ref={register} as="input"/>
         </Form.Group>
         <Form.Group controlId="name">
           <Form.Label>Funfic name</Form.Label>
-          <Form.Control name="name" ref={register} as="input"></Form.Control>
+          <Form.Control name="name" ref={register} as="input"/>
         </Form.Group>
         <Form.Group controlId="description">
           <Form.Label>Description</Form.Label>

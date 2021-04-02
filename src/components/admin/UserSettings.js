@@ -10,7 +10,7 @@ import {
 import { AuthContext } from "../../contexts/AuthContext";
 import CustomSpinner from "../bootstrapWrappers/CustomSpinner";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import User from "../../dto/user";
+import User from "../../dtos/user";
 import UserRolesForm from "./UserRolesForm";
 
 function UserSettings() {
@@ -18,25 +18,21 @@ function UserSettings() {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState(undefined);
 
+  const withEditedProperties = (user) =>
+    new User(
+      user.enabled ? "Active" : "Inactive",
+      user.name,
+      user.id,
+      user.registrationIsoDateTime,
+      user.lastLoginIsoDateTime,
+      user.roles.join(", ")
+    );
+
   useEffect(() => {
     if (auth.isAuthenticated) {
-      fetchUser(
-        id,
-        auth.token,
-        (user) => {
-          setUser(
-            new User(
-              user.enabled ? "Active" : "Inactive",
-              user.name,
-              user.id,
-              user.registrationIsoDateTime,
-              user.lastLoginIsoDateTime,
-              user.roles.join(", ")
-            )
-          );
-        },
-        (error) => console.log(error)
-      );
+      fetchUser(id, auth.token)
+        .then((user) => setUser(withEditedProperties(user)))
+        .catch(console.log);
     }
   }, [auth, id]);
 
@@ -51,40 +47,27 @@ function UserSettings() {
   );
 
   function onDelete() {
-    deleteUserById(
-      id,
-      auth.token,
-      () => console.log(`Deleted ${id}`),
-      (error) => console.log(error)
-    );
+    deleteUserById(id, auth.token)
+      .then(() => console.log(`Deleted ${id}`))
+      .catch(console.log);
   }
 
   function onBlock() {
-    blockUser(
-      id,
-      auth.token,
-      () => console.log(`Blocked ${id}`),
-      (error) => console.log(error)
-    );
+    blockUser(id, auth.token)
+      .then(() => console.log(`Blocked ${id}`))
+      .catch(console.log);
   }
 
   function updateRoles(roles) {
-    updateUserRoles(
-      id,
-      roles,
-      auth.token,
-      () => console.log(`User ${id} is now with roles: ${roles}`),
-      (error) => console.log(error)
-    );
+    updateUserRoles(id, roles, auth.token)
+      .then(() => console.log(`User ${id} is now with roles: ${roles}`))
+      .catch(console.log);
   }
 
   function onUnblock() {
-    unblockUser(
-      id,
-      auth.token,
-      () => console.log(`Unblocked ${id}`),
-      (error) => console.log(error)
-    );
+    unblockUser(id, auth.token)
+      .then(() => console.log(`Unblocked ${id}`))
+      .catch(console.log);
   }
 
   return (

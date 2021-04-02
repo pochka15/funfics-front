@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
 import {
   checkIfCanRateFunfic,
-  getAverageRating,
+  getFunficRating,
   rateFunfic,
 } from "../../api/funficsApi";
 
@@ -14,50 +14,42 @@ function FunficRating() {
   const { id } = useParams();
   const auth = useContext(AuthContext);
   const { register, handleSubmit } = useForm();
-  const [averageRating, setAverageRating] = useState(undefined);
+  const [rating, setRating] = useState(undefined);
 
   function onSendRating(data) {
-    rateFunfic(
-      id,
-      data.rating,
-      auth.token,
-      () => {
-        setCanRate(false);
-      },
-      (error) =>
+    rateFunfic(id, data.rating, auth.token)
+      .then(() => setCanRate(false))
+      .catch((error) =>
         console.log(`Error while sending rating the funfic: ${error.message}`)
-    );
+      );
   }
 
   useEffect(() => {
-    getAverageRating(
-      id,
-      (rating) => setAverageRating(rating),
-      (error) =>
+    getFunficRating(id)
+      .then((rating) => setRating(rating))
+      .catch((error) =>
         console.log(`Error while getting the average rating: ${error.message}`)
-    );
+      );
   }, [id]);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      checkIfCanRateFunfic(
-        id,
-        auth.token,
-        (canRate) => setCanRate(canRate),
-        (error) =>
+      checkIfCanRateFunfic(id, auth.token)
+        .then((canRate) => setCanRate(canRate))
+        .catch((error) =>
           console.log(
             `Error while checking if can rate the funfic: ${error.message}`
           )
-      );
+        );
     }
   }, [auth, id]);
 
   return (
     <Form onSubmit={handleSubmit(onSendRating)}>
       <Form.Group>
-        {averageRating !== undefined && (
+        {rating !== undefined && (
           <div>
-            <b>Funfic rating is: </b> {averageRating}
+            <b>Funfic rating is: </b> {rating}
           </div>
         )}
       </Form.Group>

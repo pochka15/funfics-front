@@ -19,29 +19,21 @@ function UserFunfics() {
 
   useEffect(() => {
     function fetchFunfics() {
-      fetchUserFunfics(
-        token,
-        (jsonData) => {
-          setFunfics(jsonData);
-          setErrorMessage(undefined);
-        },
-        (error) => setErrorMessage("Couldn't fetch messages, error: " + error)
-      );
+      fetchUserFunfics(token)
+        .then(setFunfics)
+        .catch((error) => setErrorMessage(error.message));
     }
 
     isAuthenticated ? fetchFunfics() : setErrorMessage("Please, sign in");
   }, [isAuthenticated, token]);
 
   function deleteSelectedFunfics() {
-    deleteUserFunfics(
-      auth.token,
-      Array.from(selectedIdsToFunfics.keys()),
-      () => {
+    deleteUserFunfics(auth.token, Array.from(selectedIdsToFunfics.keys()))
+      .then(() => {
         setFunfics(notSelectedFunfics);
         setTableKeyToRemount(tableKeyToRemount ? 0 : 1);
-      },
-      (error) => console.log(error.message)
-    );
+      })
+      .catch((error) => setErrorMessage(error.message));
   }
 
   function notSelectedFunfics() {

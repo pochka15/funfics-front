@@ -2,13 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import UsersTable from "./UsersTable";
 import CustomSpinner from "../bootstrapWrappers/CustomSpinner";
 import { Container } from "react-bootstrap";
-import {
-  defaultAuthConfig,
-  makeGet,
-} from "../../utils/communicationWithServer";
-import ApiUrls from "../../apiUrls";
 import { AuthContext } from "../../contexts/AuthContext";
-import User from "../../dto/user";
+import User from "../../dtos/user";
+import { fetchAllUsers } from "../../api/adminApi";
 
 function UserManagement() {
   const [tableUsers, setTableUsers] = useState(undefined);
@@ -16,13 +12,11 @@ function UserManagement() {
 
   const reloadUsersData = useCallback(() => {
     if (auth.isAuthenticated) {
-      makeGet(
-        ApiUrls.ADMIN_USERS,
-        defaultAuthConfig(auth.token),
-        (usersData) =>
-          setTableUsers(usersData.map(toUser).map(addRegistrationDate)),
-        (error) => console.log(error.message)
-      );
+      fetchAllUsers(auth.token)
+        .then((users) =>
+          setTableUsers(users.map(toUser).map(addRegistrationDate))
+        )
+        .catch(console.log);
     }
   }, [auth]);
 

@@ -31,19 +31,15 @@ function CreateNewFunfic() {
   }
 
   function onSave(funficData) {
-    if (auth.isAuthenticated) {
-      save(
-        funficData,
-        auth.token,
-        () =>
+    const saveFunfic = () =>
+      save(funficData, auth.token)
+        .then(() =>
           setSuccessMessage(
-            "Funfic '" + funficData.name + "' is stored successfully"
-          ),
-        () => setErrorMessage("Something went wrong :(")
-      );
-    } else {
-      setErrorMessage("Unauthenticated");
-    }
+            `Funfic '${funficData.name}' is stored successfully`
+          )
+        )
+        .catch(() => setErrorMessage("Something went wrong :("));
+    auth.isAuthenticated ? saveFunfic() : setErrorMessage("Unauthenticated");
   }
 
   return (

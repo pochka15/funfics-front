@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ErrorAlert from "../bootstrapWrappers/ErrorAlert";
 import FunficsTable from "./FunficsTable";
-import {fetchFunficsWithoutContent} from "../../api/funficsApi";
+import { fetchFunficsWithoutContent } from "../../api/funficsApi";
 import CustomSpinner from "../bootstrapWrappers/CustomSpinner";
 
 /**
@@ -13,12 +13,11 @@ function AllFunfics() {
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [funfics, setFunfics] = useState(undefined);
   React.useEffect(() => {
-    fetchFunficsWithoutContent(
-      (jsonData) => {
-        setFunfics(jsonData);
-      },
-      (error) => setErrorMessage("Couldn't fetch messages, error: " + error)
-    );
+    fetchFunficsWithoutContent()
+      .then((funfics) => setFunfics(funfics))
+      .catch((error) =>
+        setErrorMessage("Couldn't fetch messages, error: " + error)
+      );
   }, []);
 
   const spinnerOrTable =

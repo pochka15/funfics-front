@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Button, Container, Form } from "react-bootstrap";
-import { signIn } from "../../api/userActivityApi";
+import { login } from "../../api/userActivityApi";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -13,16 +13,12 @@ function Login() {
   const history = useHistory();
 
   function onSubmit(credentials) {
-    signIn(
-      credentials,
-      (data) => {
+    login(credentials)
+      .then((data) => {
         auth.login(data.jwt);
         history.push(`/`);
-      },
-      (error) => {
-        console.log(error.toString());
-      }
-    );
+      })
+      .catch(console.log);
   }
 
   useEffect(() => {

@@ -33,11 +33,11 @@ function FunficPage() {
   }, [auth, funfic]);
 
   useEffect(() => {
-    fetchFunficById(
-      id,
-      (funfic) => setFunfic(funfic),
-      () => setErrorMessage("Couldn't fetch a funfic with the id: " + id)
-    );
+    fetchFunficById(id)
+      .then(setFunfic)
+      .catch(() =>
+        setErrorMessage("Couldn't fetch a funfic with the id: " + id)
+      );
   }, [id]);
 
   useEffect(() => setFreezeCommentsComponent(!!errorMessage), [errorMessage]);
@@ -50,7 +50,7 @@ function FunficPage() {
     <Container>
       <Row>
         <Col>
-          <FunficRating id={id}/>
+          <FunficRating id={id} />
           <Button
             disabled={!(funfic && curUserIsAuthor)}
             onClick={() => history.push(`/edit-funfic/${id}`)}

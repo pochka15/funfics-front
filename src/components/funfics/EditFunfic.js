@@ -11,11 +11,9 @@ function EditFunfic() {
   const auth = useContext(AuthContext);
 
   useEffect(() => {
-    fetchFunficById(
-      id,
-      (funfic) => setFetchedFunfic(funfic),
-      (error) => console.log(error)
-    );
+    fetchFunficById(id)
+      .then((funfic) => setFetchedFunfic(funfic))
+      .catch(console.log);
   }, [id]);
 
   function withId(funfic) {
@@ -25,12 +23,9 @@ function EditFunfic() {
 
   function saveEditedFunfic(funfic) {
     if (auth.isAuthenticated) {
-      update(
-        withId(funfic),
-        auth.token,
-        () => console.log("Updated"),
-        (error) => console.log(error)
-      );
+      update(withId(funfic), auth.token)
+        .then(() => console.log(`Updated funfic ${funfic.name}`))
+        .catch(console.log);
     } else {
       console.log("Unauthenticated");
     }

@@ -63,15 +63,12 @@ function UsersTable({ users, reloadUsers }) {
   };
 
   function onMakeAdmin(id) {
-    makeAdmin(
-      id,
-      auth.token,
-      () => {
+    makeAdmin(id, auth.token)
+      .then(() => {
         console.log(`User ${id} is now admin`);
         reloadUsers();
-      },
-      (error) => console.log(error)
-    );
+      })
+      .catch(console.log);
   }
 
   return (
@@ -111,15 +108,9 @@ function UsersTable({ users, reloadUsers }) {
         },
         details: (item, index) => {
           function onDelete() {
-            deleteUserById(
-              item.id,
-              auth.token,
-              () => {
-                console.log(`Deleted ${item.id}`);
-                reloadUsers();
-              },
-              (error) => console.log(error)
-            );
+            deleteUserById(item.id, auth.token)
+              .then(() => console.log("Successfully deleted user"))
+              .catch(console.log);
           }
 
           return (

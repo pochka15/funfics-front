@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { signUp } from "../../api/userActivityApi";
+import { register as apiRegister } from "../../api/userActivityApi";
 import { useHistory } from "react-router-dom";
 
 function Register() {
@@ -9,13 +9,9 @@ function Register() {
   const emailRef = useRef();
   const history = useHistory();
   const onSubmit = (data) => {
-    signUp(
-      data,
-      () => {
-        history.push("/login");
-      },
-      () => console.log("Registration error")
-    );
+    apiRegister(data)
+      .then(() => history.push("/login"))
+      .catch(() => console.log("Registration error"));
   };
 
   useEffect(() => {

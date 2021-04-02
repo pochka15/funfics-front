@@ -1,171 +1,148 @@
-import ApiUrls from "../apiUrls";
-import {defaultAuthConfig, makeGet, makePost,} from "../utils/communicationWithServer";
+import { swaggerClient, swaggerClientWithToken } from "../utils/swaggerUtils";
 
 /**
  * @param funfic
  * @param token - JWT token
- * @param {function(any)} responseDataHandler
- * @param {function(any)} errorHandler
+ * @returns {Promise<*>}
  */
-function save(funfic, token, responseDataHandler, errorHandler) {
-  makePost(
-    funfic,
-    ApiUrls.SAVE_FUNFIC,
-    defaultAuthConfig(token),
-    responseDataHandler,
-    errorHandler
+export async function save(funfic, token) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis["funfics-controller"].saveUsingPOST(
+    {},
+    { requestBody: funfic }
   );
+  return response.body;
 }
 
-function update(funfic, token, responseDataHandler, errorHandler) {
-  makePost(
-    funfic,
-    ApiUrls.UPDATE_FUNFIC,
-    defaultAuthConfig(token),
-    responseDataHandler,
-    errorHandler
+/**
+ * Update funfic data. All the previous funfic data will be replaced with the new data.
+ * @param funfic
+ * @param token
+ * @returns {Promise<*>}
+ */
+export async function update(funfic, token) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis["funfics-controller"].updateUsingPOST(
+    {},
+    { requestBody: funfic }
   );
+  return response.body;
 }
 
 /**
  * @param {number} funficId
- * @param {function(JSON)} responseDataHandler
- * @param {function(any)} errorHandler
+ * @returns {Promise<*>}
  */
-function fetchFunficById(funficId, responseDataHandler, errorHandler) {
-  makeGet(
-    ApiUrls.SINGLE_FUNFIC,
-    {
-      params: { id: funficId },
-    },
-    responseDataHandler,
-    errorHandler
-  );
+export async function fetchFunficById(funficId) {
+  const client = await swaggerClient();
+  const response = await client.apis[
+    "funfics-controller"
+  ].singleFunficUsingGET({ funficId });
+  return response.body;
 }
 
-function fetchFunficComments(funficId, responseDataHandler, errorHandler) {
-  makeGet(
-    ApiUrls.FUNFIC_COMMENTS,
-    {
-      params: { id: funficId },
-    },
-    responseDataHandler,
-    errorHandler
-  );
-}
-
-function saveComment(content, funficId, token, onSuccess, errorHandler) {
-  makePost(
-    { content, funficId },
-    ApiUrls.SAVE_COMMENT,
-    defaultAuthConfig(token),
-    onSuccess,
-    errorHandler
-  );
+/**
+ * @param funficId
+ * @returns {Promise<*>}
+ */
+export async function fetchFunficComments(funficId) {
+  const client = await swaggerClient();
+  const response = await client.apis[
+    "funfic-comments-controller"
+  ].funficCommentsUsingGET({ funficId });
+  return response.body;
 }
 
 /**
  * Fetch all the funfics without their contents
- * @param {function(JSON)} jsonDataHandler
- * @param {function(any)} errorHandler
+ * @returns {Promise<*>}
  */
-function fetchFunficsWithoutContent(jsonDataHandler, errorHandler) {
-  makeGet(ApiUrls.ALL_FUNFICS, {}, jsonDataHandler, errorHandler);
+export async function fetchFunficsWithoutContent() {
+  const client = await swaggerClient();
+  const response = await client.apis[
+    "funfics-controller"
+  ].funficsWithoutContentUsingGET();
+  return response.body;
 }
 
 /**
- * @param token - JWT token
- * @param {function(JSON)} jsonDataHandler
- * @param {function(any)} errorHandler
+ * Fetch funfics which author is the user with the given jwt token.
+ * @param token JWT token
+ * @returns {Promise<*>}
  */
-function fetchUserFunfics(token, jsonDataHandler, errorHandler) {
-  makeGet(
-    ApiUrls.PERSONAL_FUNFICS,
-    defaultAuthConfig(token),
-    jsonDataHandler,
-    errorHandler
-  );
+export async function fetchUserFunfics(token) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis[
+    "funfics-controller"
+  ].userFunficsUsingGET();
+  return response.body;
 }
 
 /**
  *
  * @param token - JWT token
  * @param funficIds - Array of id numbers
- * @param {function()} onSuccess
- * @param {function(any)} errorHandler
+ * @returns {Promise<*>}
  */
-function deleteUserFunfics(token, funficIds, onSuccess, errorHandler) {
-  makePost(
-    { funficIds },
-    ApiUrls.DELETE_FUNFIC,
-    defaultAuthConfig(token),
-    onSuccess,
-    errorHandler
-  );
+export async function deleteUserFunfics(token, funficIds) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis[
+    "funfics-controller"
+  ].deleteUserFunficsUsingPOST({}, { requestBody: { funficIds } });
+  return response.body;
 }
 
-export function searchFunficsByQuery(query, jsonDataHandler, errorHandler) {
-  makeGet(
-    ApiUrls.SEARCH_FUNFICS,
-    { params: { query } },
-    jsonDataHandler,
-    errorHandler
-  );
+/**
+ * Search for the funfics by sending the query. Ex. query = "hello" should find the funfic with the name "hello"
+ * @param query
+ * @returns {Promise<*>}
+ */
+export async function searchFunficsByQuery(query) {
+  const client = await swaggerClient();
+  const response = await client.apis["search-controller"].searchUsingGET({
+    query,
+  });
+  return response.body;
 }
 
 /**
  * Check if user with the given token can rate funfic
  * @param funficId
  * @param token
- * @param {function(boolean)} jsonDataHandler
- * @param errorHandler
+ * @returns {Promise<*>}
  */
-export function checkIfCanRateFunfic(
-  funficId,
-  token,
-  jsonDataHandler,
-  errorHandler
-) {
-  makeGet(
-    ApiUrls.CHECK_CAN_RATE,
-    {
-      ...defaultAuthConfig(token),
-      params: { funficId },
-    },
-    jsonDataHandler,
-    errorHandler
-  );
+export async function checkIfCanRateFunfic(funficId, token) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis[
+    "funfics-controller"
+  ].checkUserCanRateFunficUsingGET({ funficId });
+  return response.body;
 }
 
-export function getAverageRating(funficId, jsonDataHandler, errorHandler) {
-  makeGet(
-    ApiUrls.FUNFIC_RATING,
-    { params: { id: funficId } },
-    jsonDataHandler,
-    errorHandler
-  );
+/**
+ * @param funficId
+ * @returns {Promise<*>}
+ */
+export async function getFunficRating(funficId) {
+  const client = await swaggerClient();
+  const response = await client.apis[
+    "funfics-controller"
+  ].funficRatingUsingGET({ funficId });
+  return response.body;
 }
 
-export function rateFunfic(funficId, rating, token, onSuccess, errorHandler) {
-  makePost(
-    {
-      funficId,
-      rating,
-    },
-    ApiUrls.RATE_FUNFIC,
-    defaultAuthConfig(token),
-    onSuccess,
-    errorHandler
+/**
+ * Give a rating for the funfic from the user with the given token. Then the average rating will be recalculated.
+ * @param funficId
+ * @param rating
+ * @param token
+ * @returns {Promise<*>}
+ */
+export async function rateFunfic(funficId, rating, token) {
+  const client = await swaggerClientWithToken(token);
+  const response = await client.apis["funfics-controller"].rateUsingPOST(
+    {},
+    { requestBody: { funficId, rating } }
   );
+  return response.body;
 }
-
-export {
-  save,
-  fetchFunficById,
-  fetchFunficsWithoutContent,
-  fetchUserFunfics,
-  deleteUserFunfics,
-  update,
-  fetchFunficComments,
-  saveComment,
-};

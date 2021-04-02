@@ -15,7 +15,7 @@ function useWebSocketComments(funficId) {
   function post(comment) {
     if (comment.length)
       sockClientRef.current.send(
-        "/sock/save-comment",
+        ApiUrls.WEBSOCKET_SAVE_COMMENT_PATH,
         {},
         JSON.stringify({
           content: comment,
@@ -25,13 +25,9 @@ function useWebSocketComments(funficId) {
   }
 
   useEffect(() => {
-    fetchFunficComments(
-      funficId,
-      (comments) => setComments(comments),
-      (error) => {
-        setErrors([`Error while fetching the comment: ${error.message}`]);
-      }
-    );
+    fetchFunficComments(funficId)
+      .then(setComments)
+      .catch((error) => setErrors([error]));
   }, [funficId]);
 
   useEffect(() => {
@@ -40,7 +36,7 @@ function useWebSocketComments(funficId) {
       ? { Authorization: `Bearer ${auth.token}` }
       : {};
     sockClient.connect(authOptions, () => {
-      sockClient.subscribe("/sock/comment-listeners", (message) => {
+      sockClient.subscribe("/sock/comments", (message) => {
         setComments((prev) => [...prev, JSON.parse(message.body)]);
       });
     });

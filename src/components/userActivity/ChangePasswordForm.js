@@ -9,13 +9,9 @@ function ChangePasswordForm() {
   const auth = React.useContext(AuthContext);
 
   function onSubmit(passwords) {
-    changePassword(
-      auth.token,
-      passwords.curPassword,
-      passwords.newPassword,
-      () => console.log("Password is changed"),
-      (error) => console.log(error.message)
-    );
+    changePassword(auth.token, passwords.curPassword, passwords.newPassword)
+      .then(() => console.log("Password is changed"))
+      .catch(console.log);
   }
 
   return (
