@@ -12,7 +12,7 @@ function BaseNavBar() {
       <Navbar.Brand href="/">Funfics</Navbar.Brand>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/editor">Editor</Nav.Link>
+          <Nav.Link href="/editor">New funfic</Nav.Link>
           <NavDropdown title="Activity" id="basic-nav-dropdown">
             <NavDropdown.Item href="/register">Register</NavDropdown.Item>
             <NavDropdown.Item href="/login">Login</NavDropdown.Item>
