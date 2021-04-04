@@ -64,8 +64,8 @@ function UsersTable({ users, reloadUsers }) {
 
   function onMakeAdmin(id) {
     makeAdmin(id, auth.token)
-      .then(() => {
-        console.log(`User ${id} is now admin`);
+      .then((user) => {
+        console.log(`User ${user.name} is now an admin`);
         reloadUsers();
       })
       .catch(console.log);

@@ -33,9 +33,9 @@ function CreateNewFunfic() {
   function onSave(funficData) {
     const saveFunfic = () =>
       save(funficData, auth.token)
-        .then(() =>
+        .then((savedFunfic) =>
           setSuccessMessage(
-            `Funfic '${funficData.name}' is stored successfully`
+            `Funfic '${savedFunfic.name}' is stored successfully`
           )
         )
         .catch(() => setErrorMessage("Something went wrong :("));

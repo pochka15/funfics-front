@@ -24,7 +24,7 @@ function EditFunfic() {
   function saveEditedFunfic(funfic) {
     if (auth.isAuthenticated) {
       update(withId(funfic), auth.token)
-        .then(() => console.log(`Updated funfic ${funfic.name}`))
+        .then((updatedFunfic) => console.log(`Updated funfic ${updatedFunfic.name}`))
         .catch(console.log);
     } else {
       console.log("Unauthenticated");

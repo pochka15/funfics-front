@@ -18,20 +18,22 @@ function UserSettings() {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState(undefined);
 
-  const withEditedProperties = (user) =>
-    new User(
-      user.enabled ? "Active" : "Inactive",
-      user.name,
-      user.id,
-      user.registrationIsoDateTime,
-      user.lastLoginIsoDateTime,
-      user.roles.join(", ")
+  const setUserWithEditedProperties = (user) =>
+    setUser(
+      new User(
+        user.enabled ? "Active" : "Inactive",
+        user.name,
+        user.id,
+        user.registrationIsoDateTime,
+        user.lastLoginIsoDateTime,
+        user.roles.join(", ")
+      )
     );
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       fetchUser(id, auth.token)
-        .then((user) => setUser(withEditedProperties(user)))
+        .then(setUserWithEditedProperties)
         .catch(console.log);
     }
   }, [auth, id]);
@@ -54,19 +56,19 @@ function UserSettings() {
 
   function onBlock() {
     blockUser(id, auth.token)
-      .then(() => console.log(`Blocked ${id}`))
+      .then(setUserWithEditedProperties)
       .catch(console.log);
   }
 
   function updateRoles(roles) {
     updateUserRoles(id, roles, auth.token)
-      .then(() => console.log(`User ${id} is now with roles: ${roles}`))
+      .then(setUserWithEditedProperties)
       .catch(console.log);
   }
 
   function onUnblock() {
     unblockUser(id, auth.token)
-      .then(() => console.log(`Unblocked ${id}`))
+      .then(setUserWithEditedProperties)
       .catch(console.log);
   }
 
